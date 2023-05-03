@@ -2,6 +2,9 @@
  * Layer class
 */
 
+#ifndef LAYER_H
+#define LAYER_H
+
 // typedef struct Wire {
 //     double weight;
 //     Node *start;
@@ -25,3 +28,5 @@ class Layer {
     private:
 
 };
+
+#endif

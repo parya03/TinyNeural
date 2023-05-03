@@ -7,11 +7,6 @@
 #include "layer.h"
 #include <cmath>
 
-Layer input(2, NULL, true); // 0 previous node neurons because no previous node
-Layer h1(2, &input, false);
-Layer h2(2, &h1, false);
-Layer output(1, &h2, false);
-
 // Passed in array of pointers to layers (first being input, last being output) and number of layers
 NeuralNetwork::NeuralNetwork(Layer *layers_in[], uint32_t numlayers) {
     // double inputvalues[2] = {1, 1};
@@ -64,4 +59,15 @@ double NeuralNetwork::calcTotalError(training_set_t *set) {
         output += pow((set->output[i] - (layers[num_layers - 1]->activation_values[i])), 2);
     }
     return output;
+}
+
+double NeuralNetwork::calcAverageTotalError(training_data_t *data) {
+    double totalerror = 0;
+
+    for(uint32_t i = 0; i < data->sets; i++) {
+        totalerror += calcTotalError(data->data[i]);
+    }
+
+    average_total_error = (totalerror / (double)(data->sets));
+    return average_total_error;
 }
