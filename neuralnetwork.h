@@ -16,10 +16,10 @@ class NeuralNetwork {
         NeuralNetwork(Layer *layers[], uint32_t numlayers);
         void setInput(double inputs[]); // Set activation of all input nodes to values from array given
         double *calcOutput();
-        double calcTotalError();
+        double calcTotalError(training_set_t *set);
     private:
         Layer **layers; // Array of pointer to layers
         uint32_t num_layers;
         double total_error; // Total error of network
-        double **training_data;
+        training_set_t *training_data; // Array of training data
 };

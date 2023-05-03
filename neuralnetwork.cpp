@@ -5,6 +5,7 @@
 #include <iostream>
 #include "neuralnetwork.h"
 #include "layer.h"
+#include <cmath>
 
 Layer input(2, NULL, true); // 0 previous node neurons because no previous node
 Layer h1(2, &input, false);
@@ -52,6 +53,15 @@ void NeuralNetwork::setInput(double inputs[]) {
     }
 }
 
-double NeuralNetwork::calcTotalError() {
-    
+double NeuralNetwork::calcTotalError(training_set_t *set) {
+    // Set input to training set provided
+    setInput(set->input);
+
+    // Calculate total error by using formula (expected-actual)^2 on all outputs
+    double output = 0;
+    double *temp = calcOutput();
+    for(uint32_t i = 0; i < layers[num_layers - 1]->numNodes; i++) {
+        output += pow((set->output[i] - (layers[num_layers - 1]->activation_values[i])), 2);
+    }
+    return output;
 }
