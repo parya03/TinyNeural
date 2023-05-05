@@ -24,6 +24,7 @@ class Layer {
         double *biases; // Biases of every node
         double *activation_values; // Values of every node after calculation
         double *prev_activation_values; // Values of previous layer's calculation
+        double *errors; // Column matrix of errors for each node in this layer
         bool isInput; // "Should this layer do it's own activation value calculations?"
     private:
 

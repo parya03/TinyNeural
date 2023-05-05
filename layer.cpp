@@ -6,81 +6,7 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
-
-/**
- * Some math functions:
-*/
-
-// ReLU activation function
-inline double relu(double x) {
-    return x > 0 ? x : 0;
-}
-// Find ReLU of whole matrix
-void reluMatrix(double a[], double b[], uint32_t a_b_size) {
-    for(uint32_t i = 0; i < a_b_size; i++) {
-        b[i] = relu(a[i]);
-    }
-}
-// Multiply 2 matrices
-// TODO: OpenCL
-void multiplyMatrices(
-        double a[],
-        const uint32_t a_rows,
-        const uint32_t a_cols,
-        double b[],
-        const uint32_t b_cols,
-        double c[]) {
-    // https://en.wikipedia.org/wiki/Row-_and_column-major_order
-
-    int a_size = a_rows * a_cols;
-    
-    int c_index = 0;
-
-    // Debugging printfs
-    // for(int i = 0; i < a_rows*a_cols; ++i) {
-    //     printf("%lf ", a[i]);
-    //     if(i % a_cols == 0)
-    //         printf("\n");
-    // }
-    // for(int i = 0; i < a_rows*b_cols; ++i) {
-    //     printf("%lf ", b[i]);
-    //     if(i % b_cols == 0)
-    //         printf("\n");
-    // }
-    // printf("\n");
-    // printf("-------------------------------------\n");
-    
-    for(int a_current = 0; a_current < a_size; a_current += a_cols) { //Iterate through A row by row
-        //For each row, start iterating through columns in B
-        for(int b_current = 0; b_current < b_cols; ++b_current) {
-            double buffer = 0;
-            // Iterate through numbers to multiply together
-            for(int i = 0; i < a_cols; ++i) {
-                buffer += (a[i + a_current] * b[(i*b_cols) + b_current]);
-            }
-            c[c_index] = buffer;
-
-            //printf("%d - %lf ", c_index, buffer);
-            
-            ++c_index;
-        }
-        //printf("\n");
-    }
-
-    // Debugging printfs
-    // for(int i = 0; i < a_rows*b_cols; ++i) {
-    //     printf("%lf ", c[i]);
-    //     if(i % b_cols == 0)
-    //         printf("\n");
-    // }
-    // printf("\n");
-}
-// Add matrices
-void addMatrices(double a[], double b[], uint32_t a_b_size, double c[]) {
-    for(uint32_t i = 0; i < a_b_size; i++) {
-        c[i] = a[i] + b[i];
-    }
-}
+#include "math_funcs.h"
 
 /**
  * Layer class
@@ -103,6 +29,7 @@ Layer::Layer(int node_num, Layer *prev, bool isInput) {
     this->activation_values = new double[node_num];
     this->prev_activation_values = (isInput ? NULL : prev->activation_values);
     this->isInput = isInput;
+    this->errors = new double[node_num];
 
     // Randomize weights and biases
     std::srand(time(0));
