@@ -11,12 +11,22 @@ inline double relu(double x) {
     return x > 0 ? x : 0;
 }
 
-// Find ReLU of whole matrix
-void reluMatrix(double a[], double b[], uint32_t a_b_size) {
+// Apply function to whole matrix
+void map(double a[], double b[], uint32_t a_b_size, double func(double in)) {
     for(uint32_t i = 0; i < a_b_size; i++) {
-        b[i] = relu(a[i]);
+        b[i] = func(a[i]);
     }
 }
+
+// Find ReLU of whole matrix
+void reluMatrix(double a[], double b[], uint32_t a_b_size) {
+    // for(uint32_t i = 0; i < a_b_size; i++) {
+    //     b[i] = relu(a[i]);
+    // }
+    map(a, b, a_b_size, relu);
+}
+
+
 
 // Multiply 2 matrices
 // TODO: OpenCL

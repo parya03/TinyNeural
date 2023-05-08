@@ -95,3 +95,9 @@ void NeuralNetwork::setPrevLayerErrors(uint32_t layer_index) {
     // Do recursion for all previous layers
     setPrevLayerErrors((layer_index - 1));
 }
+
+void NeuralNetwork::train(training_data_t *data) {
+    // Prepare
+    double average_total_err = calcAverageTotalError(data);
+    setPrevLayerErrors(this->num_layers);
+}

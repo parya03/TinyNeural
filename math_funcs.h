@@ -4,6 +4,7 @@
 #include <iostream>
 
 double relu(double x);
+void map(double a[], double b[], uint32_t a_b_size, double func(double in));
 void reluMatrix(double a[], double b[], uint32_t a_b_size);
 void multiplyMatrices(
         double a[],

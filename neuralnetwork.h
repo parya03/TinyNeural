@@ -27,6 +27,7 @@ class NeuralNetwork {
         double* calcOutput();
         double calcTotalError(training_set_t *set); // Calculate total error for one training set
         double calcAverageTotalError(training_data_t *data); // Calculate average error for all training data in array
+        void train(training_data_t *data); // Start training
     private:
         Layer **layers; // Array of pointer to layers
         uint32_t num_layers;
