@@ -98,6 +98,20 @@ void NeuralNetwork::setPrevLayerErrors(uint32_t layer_index) {
 
 void NeuralNetwork::train(training_data_t *data) {
     // Prepare
-    double average_total_err = calcAverageTotalError(data);
-    setPrevLayerErrors(this->num_layers);
+    // double average_total_err = calcAverageTotalError(data);
+    // setPrevLayerErrors(this->num_layers);
+
+    // Calculate average output and node errors
+    double *average_total_errors = new double[num_layers];
+
+    for(uint32_t i = 0; i < data->sets; i++) {
+        average_total_errors[num_layers - 1] += calcTotalError(data->data[i]); // Set error for output node
+        setPrevLayerErrors(num_layers);
+        for(int i = (num_layers-2); i >= 0; i--) {
+            // TODO: Come back to this when not sleepy
+        }
+    }
+
+    // average_total_error = (totalerror / (double)(data->sets));
+
 }
